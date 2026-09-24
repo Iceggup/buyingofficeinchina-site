@@ -1,0 +1,6 @@
+# 历史版本（不部署、不入库）
+_v1-text-only/
+_v2-multipage/
+*.bak
+.DS_Store
+wrangler.toml.local
