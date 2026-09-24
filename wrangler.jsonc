@@ -1,0 +1,34 @@
+/**
+ * Cloudflare Worker configuration — Buying Office in China
+ * Project: buyingofficeinchina-site   |   Domain: buyingofficeinchina.com
+ *
+ * The site is served as static assets from the repository root, and
+ * worker/index.js handles /api/* (inquiry intake + CSV export).
+ * The D1 binding declared here is applied automatically on every deploy,
+ * so no dashboard binding is needed.
+ */
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "buyingofficeinchina-site",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-09-24",
+
+  // keep NOTIFY_TO / LEAD_EXPORT_KEY (and any secrets) that are set in the dashboard
+  "keep_vars": true,
+
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    "run_worker_first": true
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "buyingofficeinchina",
+      "database_id": "3004028a-bde0-42b6-a870-1ef6007059ba"
+    }
+  ]
+}

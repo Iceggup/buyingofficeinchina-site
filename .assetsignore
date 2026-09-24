@@ -1,0 +1,15 @@
+# Files that must NOT be served as public static assets.
+# Everything else in this folder is uploaded and served as the website.
+worker/
+functions/
+wrangler.jsonc
+wrangler.toml
+_headers
+schema.sql
+DEPLOY.md
+*.md
+*.bak
+.git/
+.gitignore
+.vscode/
+node_modules/
