@@ -244,10 +244,23 @@ async function handleLeads(request, env) {
 
 /* ------------------------------ router ------------------------------ */
 
+const APEX_HOST = "buyingofficeinchina.com";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const path = url.pathname;
+
+    // Any sub-domain (www.…) redirects permanently to the apex host, so the
+    // site is reachable at one canonical address only — no duplicate content,
+    // no split links. Path and query string are preserved.
+    if (url.hostname !== APEX_HOST && url.hostname.endsWith("." + APEX_HOST)) {
+      const target = new URL(url.toString());
+      target.hostname = APEX_HOST;
+      target.protocol = "https:";
+      target.port = "";
+      return Response.redirect(target.toString(), 301);
+    }
 
     if (path === "/api/inquiry") {
       if (request.method !== "POST") return json({ ok: false, error: "Method not allowed." }, 405);
